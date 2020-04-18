@@ -27,7 +27,7 @@ public class CommentController {
     private BookService bookService;
 
     //展现评论,list不能作为参数
-    @RequestMapping("findCommets")
+    @RequestMapping("/findComments")
     @ResponseBody
     public List<Comment> findComments(LoginUser user, Book book, HttpSession session){
         List<Comment> comments = commentService.allCommentsById(book.getBid());
@@ -35,7 +35,7 @@ public class CommentController {
         return comments;
     }
     //插入评论
-    @RequestMapping("insertComment")
+    @RequestMapping("/insertComment")
     @ResponseBody
     public String insertComment(String info,LoginUser user,Book book,Comment comment,HttpSession session){
         user=(LoginUser)session.getAttribute("user");

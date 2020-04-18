@@ -11,7 +11,7 @@ import java.io.IOException;
 
 @SpringBootApplication
 @MapperScan("com.bookmanager.replay.dao")
-@ImportResource("{classpath:replay-provider.xml}")
+@ImportResource({"classpath:replay-provider.xml"})
 public class ReplayApplication {
 
     public static void main(String[] args) {

@@ -87,9 +87,9 @@ public class BookController {
     @ResponseBody
     public Book findOneBook(Book book, HttpSession session, HttpServletRequest request) {
         logger.info("------图书详情------");
-        String random = request.getParameter("bid");
-        System.out.println("bid======="+ random);
-        book = bookService.findBookById(book.getBid());
+        int bid = Integer.parseInt(request.getParameter("bid"));
+        System.out.println("bid======="+ bid+"eeee"+book.getBid());
+        book = bookService.findBookById(bid);
         return book;
     }
 

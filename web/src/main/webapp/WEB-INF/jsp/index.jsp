@@ -142,7 +142,7 @@ body {
 						%>
 						<li><a href="#" data-toggle="modal"
 							data-target="#addbookform"><span class="glyphicon glyphicon-plus"></span> 增加新书</a></li>
-						<li><a href="./jsp/order.jsp">借阅信息</a></li>
+						<li><a href="/order">借阅信息</a></li>
 						<li><a><span>欢迎来到BookLu</span></a></li>
 						<li style="width:40px;"><div class="contentDiv" style="display:inline-block;margin:5px auto;
 							width:40px;height:40px;border-radius:100px;-webkit-border-radius:100px;-moz-border-radius:100px;
