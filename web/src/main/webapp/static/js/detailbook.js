@@ -1,3 +1,6 @@
+var url =window.location.href;
+var id=url.split("?bid=")[1];
+
 function findonebook() {
 	var url =window.location.href;
 	var id=url.split("?bid=")[1];
@@ -44,24 +47,21 @@ findonebook();
 
 
 function findcommets(){
-	var bbid = parseInt($("#canshu").html());
-//	alert("你好");
 	$.ajax({
-		url:"findCommets",
+		url:"findComments",
 		type:"post",
 		data : {
-			"bid" : bbid
+			"bid" : id
 		},
 		dataType:'json',
 		success:function(data){
-//			alert(data.bid);
 			var content="";
 			for(var i=0; i< data.length; i++){
 				var po=data[i];
 				content+="<tr>"				
-					+"<td class='infor1'>"+po.luser+"</td>"
-					+"<td class='infor2'>"+po.cdate+"</td>"
-					+"<td class='infor3'>"+po.ccont+"</td>"					
+					+"<td class='infor1' style='padding-left: 100px'>"+po.luser+"</td>"
+					+"<td class='infor2' style='padding-left: 120px'>"+po.cdate+"</td>"
+					+"<td class='infor3' style='padding-left: 100px'>"+po.ccont+"</td>"
 										
 					+"</tr>";
 			}
@@ -73,18 +73,15 @@ function findcommets(){
 findcommets();
 
 function insertcomment(){
-	var bbid = parseInt($("#canshu").html());
-//	alert("你好");
 	$.ajax({
 		url:"insertComment",
 		type:"post",
 		data:{
 			"ccont":$("#ccont").val(),
-			"bid" : bbid
+			"bid" : id
 		},
-		dataType:'json',
+		dataType:"text",
 		success:function(data){
-//			alert(data);
 		 	if(data=="评论失败，请先登录"){
 		 		alert(data);
 			}else if(data=="请输入评价"){
@@ -93,7 +90,6 @@ function insertcomment(){
 				alert(data);
 				window.location.reload();
 			}
-				
 		}	
 	});
 }

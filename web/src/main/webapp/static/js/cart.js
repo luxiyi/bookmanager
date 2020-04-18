@@ -49,15 +49,15 @@ function checkout() {
 //checkout();
 
 function removecart(pgid) {
-//	alert("删除");
+	// alert("删除");
     $.ajax({
         url: "reCartBook",
         type: "post",
         data: {
-            "bookCart.bid": pgid,
-            "bookCart.ccount": 1,
+            "bid": pgid,
+            "ccount": 1,
         },
-        dataType: 'json',  //期待的响应数据类型
+        dataType: "text",  //期待的响应数据类型
         success: function (data) {
             if (data == "已成功还书1本") {
                 alert(data);
@@ -66,7 +66,9 @@ function removecart(pgid) {
                 alert(data);
                 window.location.reload();
             }
-
+        },
+        error:function () {
+            alert("系统出错，请联系帅气的管理员");
         }
     });
 }

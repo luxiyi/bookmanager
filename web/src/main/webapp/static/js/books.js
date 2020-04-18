@@ -232,7 +232,7 @@ function addcart(pgid, pgname, pimg, pprice) {
 		success : function(data) {
 			if (data.msg == "请先登录"){
 				alert(data.msg);
-				window.location.reload();
+				// window.location.reload();
 			} else if (data.msg == "已成功借书1本") {
 				alert(data.msg);
 				window.location.reload();
@@ -259,7 +259,7 @@ function findbook() {
 				},
 				dataType : 'json',
 				success : function(data) {
-					alert(data);
+					// alert(data);
 					var arr = data;
 					var content = "";
 					for (var i = 0; i < arr.length; i++) {

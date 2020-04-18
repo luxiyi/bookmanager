@@ -38,36 +38,36 @@ public class CartController {
     private CartService cartService;
     @Autowired
     private BookService bookService;
-    private Cart cart;
-    private LoginUser user;
-    private Book book;
-    private BookCart bookCart;
-    private String reinfo = "已成功借书1本";
-    private String debookinfo = "已成功还书1本";
-    public String getDebookinfo() {
-        return debookinfo;
-    }
-
-    public void setDebookinfo(String debookinfo) {
-        this.debookinfo = debookinfo;
-    }
-
-    public String getReinfo() {
-        return reinfo;
-    }
-
-    public void setReinfo(String reinfo) {
-        this.reinfo = reinfo;
-    }
-
-
-    public LoginUser getUser() {
-        return user;
-    }
-
-    public void setUser(LoginUser user) {
-        this.user = user;
-    }
+//    private Cart cart;
+//    private LoginUser user;
+//    private Book book;
+//    private BookCart bookCart;
+//    private String reinfo = "已成功借书1本";
+//    private String debookinfo = "已成功还书1本";
+//    public String getDebookinfo() {
+//        return debookinfo;
+//    }
+//
+//    public void setDebookinfo(String debookinfo) {
+//        this.debookinfo = debookinfo;
+//    }
+//
+//    public String getReinfo() {
+//        return reinfo;
+//    }
+//
+//    public void setReinfo(String reinfo) {
+//        this.reinfo = reinfo;
+//    }
+//
+//
+//    public LoginUser getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(LoginUser user) {
+//        this.user = user;
+//    }
 
     @RequestMapping(value = "/cart")
     public String Cart(HttpSession session) {
@@ -177,27 +177,33 @@ public class CartController {
     }
 
     // 书架中减少图书，到最后为0删除图书，还书
-    public String reCartBook(HttpSession session) {
-        session.setAttribute("bookCart", bookCart);
-        bookCart = (BookCart) session.getAttribute("bookCart");
-        System.out.println(bookCart + "333333333333333333333");
-        user = (LoginUser) session.getAttribute("user");
+    @RequestMapping("reCartBook")
+    @ResponseBody
+    public String reCartBook(HttpSession session, Book book, BookCart bookCart) {
+//        session.setAttribute("bookCart", bookCart);
+//        bookCart = (BookCart) session.getAttribute("bookCart");
+//        System.out.println(bookCart + "333333333333333333333");
+        LoginUser user = (LoginUser) session.getAttribute("user");
         System.out.println(user + "4444444444444");
         // System.out.println("减少图书");
-        int count = cartService.cartccountByBid(user.getLuser(), bookCart.getBid());
+        String msg = "请联系帅气的管理员";
+        int bid = book.getBid();
+        int ccount = bookCart.getCcount();
+        int count = cartService.cartccountByBid(user.getLuser(), bid);
         System.out.println(count + "555555555555555555533333333");
         // 如果书架中书数量大于0
         if (count > 1) {
             // 书架减少数量1
-            cartService.recartcountById(bookCart.getBid());
+            cartService.recartcountById(bid);
             // 图书总数量增加1
-            cartService.addbookcountById(bookCart.getBid());
+            cartService.addbookcountById(bid);
             // 添加订单信息
             // 插入订单信息UUID 订单号必须唯一 随机产生单号
             Random random = new Random();
             String oname = "" + System.currentTimeMillis() + user.getLuser() + random.nextInt(99);
-            replayService.addOrderre(user.getLuser(), oname, bookCart.getCcount(), bookCart.getBid());
-            return "success";
+            replayService.addOrderre(user.getLuser(), oname, ccount, bid);
+            msg = "已成功还书1本";
+            return msg;
         }
         if (count == 1 || count < 1) {
             // 书架为1，再减少就是为0，直接删除
@@ -213,9 +219,9 @@ public class CartController {
             String oname = "" + System.currentTimeMillis() + user.getLuser() + random.nextInt(99);
             replayService.addOrderre(user.getLuser(), oname, bookCart.getCcount(), bookCart.getBid());
             System.out.println("还完-----------------");
-            setDebookinfo("已成功将此书还完");
+            msg = "已成功将此书还完";
             System.out.println("wwwwwwwwwwwwwwww");
-            return "input";
+            return msg;
         }
         return "success";
     }

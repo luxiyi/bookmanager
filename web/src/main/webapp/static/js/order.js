@@ -1,11 +1,12 @@
 function showorder(){
-	//alert("你好")
+	// alert("你好")
+	// window.location.href = "/order";
 	$.ajax({
 		url:"showOrder",
 		type:"post",
-		dataType:'json',  //期待的响应数据类型
+		dataType:"json",  //期待的响应数据类型
 		success:function(data){
-//			alert(data);
+			// alert("你好")
 			var content="";
 			for(var i=0; i< data.length; i++){
 				var po=data[i];

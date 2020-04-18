@@ -78,13 +78,6 @@ table th {
 <!-- 						<div class="contextBox" id="checkout">无信息</div> -->
 <!-- 					</tr> -->
 					<tr>
-						<th id="balance">我的书架</th>
-						<th>&nbsp;</th>
-						<th>&nbsp;</th>
-						<th>&nbsp;</th>
-						<th>&nbsp;</th>
-					</tr>
-					<tr>
 						<th>书籍图片</th>
 						<th>书名</th>
 						<th>购书单价（元）</th>
@@ -116,7 +109,7 @@ table th {
 							
 						</div>
 						<div class="text-right">
-							<a href="./jsp/cart.jsp"><button class="btn btn-primary" type="submit">确认</button></a>
+							<a href="/cart"><button class="btn btn-primary" type="submit">确认</button></a>
 							<button class="btn btn-danger" data-dismiss="modal">取消</button>
 						</div>
 					</div>
