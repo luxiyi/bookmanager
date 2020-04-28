@@ -14,8 +14,8 @@ import java.util.List;
 public interface BorrowMapper {
     //展现借的订单信息
     @Select("select * from orderbooksbor WHERE luser =#{param1}")
-    public List<Order> findAllOrder(String luser);
+    List<Order> findAllOrder(String luser);
     //插入借订单消息
     @Insert("insert into orderbooksbor (luser, oname, ocount, bid) values (#{param1}, #{param2}, #{param3}, #{param4})")
-    public void addOrder(String luser, String oname, int ocount, int bid);
+    void addOrder(String luser, String oname, int ocount, int bid);
 }

@@ -1,8 +1,11 @@
 package com.bookmanager.pojo;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
 
+@Data
 public class Order implements Serializable {
 
     private static final long serialVersionUID = 620421603359868704L;
@@ -34,59 +37,4 @@ public class Order implements Serializable {
         this.flag = flag;
     }
 
-    public Integer getOid() {
-        return oid;
-    }
-
-    public void setOid(Integer oid) {
-        this.oid = oid;
-    }
-
-    public String getLuser() {
-        return luser;
-    }
-
-    public void setLuser(String luser) {
-        this.luser = luser;
-    }
-
-    public String getOname() {
-        return oname;
-    }
-
-    public void setOname(String oname) {
-        this.oname = oname;
-    }
-
-    public Integer getOcount() {
-        return ocount;
-    }
-
-    public void setOcount(Integer ocount) {
-        this.ocount = ocount;
-    }
-
-    public Integer getBid() {
-        return bid;
-    }
-
-    public void setBid(Integer bid) {
-        this.bid = bid;
-    }
-
-    public Date getBdate() {
-        return bdate;
-    }
-
-    public void setBdate(Date bdate) {
-        this.bdate = bdate;
-    }
-
-    public Integer getFlag() {
-        return flag;
-    }
-
-    public void setFlag(Integer flag) {
-        this.flag = flag;
-    }
 }

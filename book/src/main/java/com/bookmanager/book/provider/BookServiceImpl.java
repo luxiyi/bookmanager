@@ -1,6 +1,5 @@
 package com.bookmanager.book.provider;
 
-import com.alibaba.dubbo.config.annotation.Service;
 import com.bookmanager.book.dao.BookMapper;
 import com.bookmanager.pojo.Book;
 import com.bookmanager.service.BookService;

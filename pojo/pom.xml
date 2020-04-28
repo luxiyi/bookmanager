@@ -13,6 +13,11 @@
             <version>5.2.5.RELEASE</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.12</version>
+        </dependency>
     </dependencies>
     <parent>
         <artifactId>bookmanager</artifactId>

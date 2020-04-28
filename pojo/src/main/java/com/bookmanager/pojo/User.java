@@ -1,7 +1,10 @@
 package com.bookmanager.pojo;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
+@Data
 public class User implements Serializable {
     private Integer uid;
 
@@ -36,75 +39,4 @@ public class User implements Serializable {
         this.flag = flag;
     }
 
-    public Integer getUid() {
-        return uid;
-    }
-
-    public void setUid(Integer uid) {
-        this.uid = uid;
-    }
-
-    public String getLuser() {
-        return luser;
-    }
-
-    public void setLuser(String luser) {
-        this.luser = luser;
-    }
-
-    public String getUname() {
-        return uname;
-    }
-
-    public void setUname(String uname) {
-        this.uname = uname;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getAge() {
-        return age;
-    }
-
-    public void setAge(String age) {
-        this.age = age;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public String getAddr() {
-        return addr;
-    }
-
-    public void setAddr(String addr) {
-        this.addr = addr;
-    }
-
-    public String getUsericon() {
-        return usericon;
-    }
-
-    public void setUsericon(String usericon) {
-        this.usericon = usericon;
-    }
-
-    public Integer getFlag() {
-        return flag;
-    }
-
-    public void setFlag(Integer flag) {
-        this.flag = flag;
-    }
 }

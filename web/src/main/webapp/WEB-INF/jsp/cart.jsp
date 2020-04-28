@@ -70,13 +70,6 @@ table th {
 		<div class="row">
 			<table class="table table-hover text-center">
 				<thead>
-<!-- 					<tr> -->
-<!-- 						<div class="titleBox">本次订单信息</div> -->
-					
-<!-- 					</tr> -->
-<!-- 					<tr> -->
-<!-- 						<div class="contextBox" id="checkout">无信息</div> -->
-<!-- 					</tr> -->
 					<tr>
 						<th>书籍图片</th>
 						<th>书名</th>
