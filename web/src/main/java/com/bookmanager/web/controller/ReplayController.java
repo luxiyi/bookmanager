@@ -20,7 +20,7 @@ import java.util.List;
  */
 @Controller
 public class ReplayController {
-    private Logger logger = LoggerFactory.getLogger(ReplayController.class);
+    private Logger LOG = LoggerFactory.getLogger(ReplayController.class);
 
     @Autowired
     private ReplayService replayService;
@@ -28,11 +28,7 @@ public class ReplayController {
     @ResponseBody
     public List<Orderre> showOrderre(HttpSession session){
         LoginUser user = (LoginUser) session.getAttribute("user");
-        System.out.println("查询订单");
-        System.out.println(user+"4444444444444");
-        System.out.println(user.getLuser());
         List<Orderre> replaies = replayService.findAllOrderre(user.getLuser());
-        System.out.println(replaies);
         return replaies;
     }
 }

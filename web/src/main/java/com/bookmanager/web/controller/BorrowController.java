@@ -21,27 +21,21 @@ import java.util.List;
 @SuppressWarnings("all")
 @Controller
 public class BorrowController {
-    private Logger logger = LoggerFactory.getLogger(BorrowController.class);
+    private Logger LOG = LoggerFactory.getLogger(BorrowController.class);
     @Autowired
     private BorrowService borrowService;
 
     @RequestMapping(value = "/order")
     public String order() {
-        logger.info("----------order----------");
+        LOG.info("----------book order----------");
         return "order";
     }
     @RequestMapping(value = "/showOrder")
     @ResponseBody
     public List<Order> showOrder(HttpSession session){
-        System.out.println("查询订单");
-        //session.put("bookCart", bookCart);
-        //bookCart = (BookCart) session.get("bookCart");
-        //System.out.println(bookCart+"333333333333333333333");
         LoginUser user = (LoginUser) session.getAttribute("user");
-        System.out.println(user+"4444444444444");
-        System.out.println(user.getLuser());
         List<Order> borrows = borrowService.findAllOrder(user.getLuser());
-        System.out.println(borrows);
+        LOG.info("book showOrder");
         return borrows;
     }
 
