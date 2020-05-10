@@ -22,12 +22,7 @@
     <modules>
         <module>pojo</module>
         <module>RPCInterface</module>
-        <module>borrow</module>
         <module>book</module>
-        <module>cart</module>
-        <module>comment</module>
-        <module>replay</module>
-        <module>user</module>
         <module>web</module>
     </modules>
 
