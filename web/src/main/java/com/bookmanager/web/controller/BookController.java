@@ -1,5 +1,6 @@
 package com.bookmanager.web.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.bookmanager.pojo.Book;
 import com.bookmanager.pojo.LoginUser;
 import com.bookmanager.service.BookService;
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,7 +32,7 @@ import java.util.Map;
 @SuppressWarnings("all")
 @Controller
 public class BookController {
-    private Logger logger = LoggerFactory.getLogger(BookController.class);
+    private Logger LOG = LoggerFactory.getLogger(BookController.class);
 
     @Autowired
     private BookService bookService;
@@ -45,20 +47,14 @@ public class BookController {
 
         session.setAttribute("page", page);
         session.setAttribute("totalPage", totalPage);
+        // 获取页码、总页码
         page = (int) session.getAttribute("page");
-        System.out.println(page);
-        // 获取页码
-        // 获取总页码
         totalPage = bookService.findTotalPage();
         // 得到每一页所有书
         int index = (page - 1) * 12;
         books = bookService.findAllByIndex(index, 12);
         book = bookService.findAllById(book);
-        System.out.println("boooooooook=========" + book);
-        // 调试
-        System.out.println(books);
-        System.out.println(page);
-        System.out.println(totalPage + "===================");
+        LOG.info("totalPage = {}, page = {}, books = {}", totalPage, page, books.toString());
         // 将所有书放入session
         session.setAttribute("books", books);
         session.setAttribute("book", book);
@@ -76,7 +72,7 @@ public class BookController {
         mav.setViewName("/detail");
         // 传入对象
         mav.addObject("book", book);
-        System.out.println(book.getBid() + "22222222222222222222222");
+        LOG.info("sendDetail，bookid = {}", book.getBid());
         return mav;
 
     }
@@ -86,9 +82,8 @@ public class BookController {
     @RequestMapping("findOneBook")
     @ResponseBody
     public Book findOneBook(Book book, HttpSession session, HttpServletRequest request) {
-        logger.info("------图书详情------");
+        LOG.info("------findOneBook------");
         int bid = Integer.parseInt(request.getParameter("bid"));
-        System.out.println("bid======="+ bid+"eeee"+book.getBid());
         book = bookService.findBookById(bid);
         return book;
     }
@@ -98,10 +93,9 @@ public class BookController {
     @ResponseBody
     public List<Book> likeBook(HttpSession session, String lbname) {
         session.setAttribute("lbname", lbname);
-        System.out.println(lbname);
         List<Book> books = new ArrayList<>();
         books = bookService.findlikeBook(lbname);
-        System.out.println("books");
+        LOG.info("likeBook, bookname = {}", lbname);
         return books;
     }
 
@@ -111,26 +105,25 @@ public class BookController {
         // 判断非空
         user = (LoginUser) session.getAttribute("user");
         LoginUser rootuser = userService.findRootByluser(user);
-        logger.info("rootuser = {}", rootuser);
         if (rootuser == null) {
             info = "你不是管理员，无法操作";
-            logger.info("你不是管理员，无法操作");
+            LOG.info("you are not rootuser, can't add books");
             return info;
         }
-        if (book.getBname() == "" || book.getBcount() == 0 || book.getImg() == "" || book.getPrice() == 0
-                || book.getAuthor() == "" || book.getPress() == "") {
-            System.out.println("不能为空");
+        if (null == book.getBname() || book.getBcount() == 0 || null == book.getImg() || book.getPrice() == 0
+                || null == book.getAuthor() || null == book.getPress()) {
+            LOG.error("add books failed, some fileds is null");
             info = "添加图书失败，字段不能为空";
             return info;
         } else {
             Book isexit = bookService.findAllById(book);// 判断是否存在
             if (isexit == null) {
                 bookService.insertBook(book);
-                System.out.println("添加成功");
+                LOG.info("add books success");
                 info = "添加成功";
                 return info;
             } else {
-                System.out.println("失败");
+                LOG.error("add books failed, some fileds is error");
                 info = "添加图书失败，请输入正确字段";
                 return info;
             }
@@ -145,15 +138,16 @@ public class BookController {
         Object obj = session.getAttribute("user");
         if (obj == null) {
             info = "请先登录";
-            logger.info("输出：{}", info);
+            LOG.error("you are not login");
             return info;
         } else {
             LoginUser rootuser = userService.findRootByluser((LoginUser) obj);
             if (rootuser == null) {
                 info = "你不是管理员，无法操作";
+                LOG.error("you are not rootuser");
                 return info;
             } else {
-                logger.info("bookid = {}", book.getBid());
+                LOG.info("bookid = {}", book.getBid());
                 book = bookService.findAllById(book);
                 bookService.deleteById(book);
                 info = "删除成功";
@@ -171,19 +165,18 @@ public class BookController {
         if (obj == null) {
             info = "请先登录";
             result.put("info", info);
-           logger.info("输出:{}", result.get("info"));
+            LOG.info("you are not login");
             return result;
         } else {
             LoginUser rootuser = userService.findRootByluser((LoginUser) obj);
-            System.out.println(rootuser);
             if (rootuser == null) {
+                LOG.info("you are not rootuser, can't modify book");
                 info = "你不是管理员，无法操作";
                 result.put("info", info);
                 return result;
             } else {
-                logger.info("bookid = {}", book.getBid());
+                LOG.info("bookid = {}", book.getBid());
                 book= bookService.findAllById(book);
-                //result.put必须和放进去的值在一起
                 result.put("book", book);
                 return result;
             }
@@ -194,10 +187,8 @@ public class BookController {
     @RequestMapping("updateBooks")
     @ResponseBody
     public String updateBooks(Book book, String info) {
-        // 得到已经修改的图书
-        // 判断非空
         if (book == null) {
-            System.out.println("不能为空");
+            LOG.error("modify book failed");
             info = "更新图书失败，请重新输入字段";
             return info;
         }
@@ -216,7 +207,7 @@ public class BookController {
 
     @RequestMapping(value = "/detail")
     public String bookDetail() {
-        logger.info("-------------图书详情-------------");
+        LOG.info("-------------books detail-------------");
         return "detail";
     }
 

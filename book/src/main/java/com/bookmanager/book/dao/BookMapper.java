@@ -17,31 +17,31 @@ import java.util.List;
 public interface BookMapper {
     //根据页码查找全部书
     @Select("SELECT bid,bname,author,price,bcount,pubdate,press,img,intro FROM books limit #{param1},#{param2}")
-    public List<Book> findALLByIndex(int index,int count);
+    List<Book> findALLByIndex(int index, int count);
     //查询总条数
     @Select("SELECT COUNT(*) total FROM books")
-    public int findTotalPage();
+    int findTotalPage();
     //增加新书
     @Insert("insert into books (bname,author,price,bcount,pubdate,press,img,intro) values (#{bname},#{author},#{price},#{bcount},#{pubdate},#{press},#{img},#{intro})")
-    public void insertBook(Book book);
+    void insertBook(Book book);
     //根据bid查找书
     @Select("select * from books where bid=#{bid}")
-    public Book findAllById(Book book);
+    Book findAllById(Book book);
     @Select("select * from books where bid=#{bid}")
-    public Book findBookById(int bid);
+    Book findBookById(int bid);
     //删除书
     @Delete("delete from books where bid = #{bid}")
-    public void deletById(Book book);
+    void deletById(Book book);
     //查询全部的书
     @Select("select * from books")
-    public List<Book> findAllBook();
+    List<Book> findAllBook();
     //修改书信息
     @Update("update books set bname=#{bname},author=#{author},press=#{press},intro=#{intro},bcount=#{bcount},price=#{price},img=#{img} ,pubdate=#{pubdate}  where bid=#{bid}")
-    public void updateById(Book book);
+    void updateById(Book book);
     //模糊查询
     @Select("SELECT * FROM books WHERE bname LIKE CONCAT('%',#{param1},'%')")
-    public List<Book> findlikeBook(String bname);
+    List<Book> findlikeBook(String bname);
     //增加评论数
     @Update("update books set comcount = comcount+1 where bid=#{param1}")
-    public void updateComcount(int bid);
+    void updateComcount(int bid);
 }

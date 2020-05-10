@@ -62,9 +62,7 @@ public class UserController {
     // 注销功能
     @RequestMapping(value ="/loginout", method = RequestMethod.GET)
     public void loginout(HttpSession session, HttpServletResponse res) throws Exception {
-        // 得到session的值
         Object obj=session.getAttribute("user");
-        // 如果session中有user，不为空
         if (obj == null) {
             res.sendRedirect("index");
             return;
@@ -88,7 +86,6 @@ public class UserController {
 
         // 确认密码
         if (!user.getConfirm().equals(user.getPass()) ) {
-            // result="注册失败，确认密码与密码不一样";
             logger.info("注册失败，密码不一样");
             info="注册失败,请重新输入";
             return info;
@@ -136,7 +133,6 @@ public class UserController {
             info="修改失败,请重新输入";
             return info;
         }
-//        logger.info("userhesd = {}", JSON.toJSONString(userhead));
         //获取文件的名字
         String fileName = userhead.getOriginalFilename();
         //获取文件类型

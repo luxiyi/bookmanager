@@ -1,5 +1,7 @@
 package com.bookmanager.pojo;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
@@ -7,6 +9,7 @@ import java.io.Serializable;
  * @Author: lxy
  * @time: 2020/4/6 21:39
  */
+@Data
 public class Cart implements Serializable {
 
     private static final long serialVersionUID = -33534807910933588L;
@@ -28,54 +31,4 @@ public class Cart implements Serializable {
         this.img = img;
     }
 
-    public int getBid() {
-        return bid;
-    }
-
-    public void setBid(int bid) {
-        this.bid = bid;
-    }
-
-    public String getBname() {
-        return bname;
-    }
-
-    public void setBname(String bname) {
-        this.bname = bname;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
-
-    public String getImg() {
-        return img;
-    }
-
-    public void setImg(String img) {
-        this.img = img;
-    }
-
-    @Override
-    public String toString() {
-        return "Cart{" +
-                "bid=" + bid +
-                ", bname='" + bname + '\'' +
-                ", price=" + price +
-                ", count=" + count +
-                ", img='" + img + '\'' +
-                '}';
-    }
 }

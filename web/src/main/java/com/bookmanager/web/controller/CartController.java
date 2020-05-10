@@ -38,36 +38,6 @@ public class CartController {
     private CartService cartService;
     @Autowired
     private BookService bookService;
-//    private Cart cart;
-//    private LoginUser user;
-//    private Book book;
-//    private BookCart bookCart;
-//    private String reinfo = "已成功借书1本";
-//    private String debookinfo = "已成功还书1本";
-//    public String getDebookinfo() {
-//        return debookinfo;
-//    }
-//
-//    public void setDebookinfo(String debookinfo) {
-//        this.debookinfo = debookinfo;
-//    }
-//
-//    public String getReinfo() {
-//        return reinfo;
-//    }
-//
-//    public void setReinfo(String reinfo) {
-//        this.reinfo = reinfo;
-//    }
-//
-//
-//    public LoginUser getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(LoginUser user) {
-//        this.user = user;
-//    }
 
     @RequestMapping(value = "/cart")
     public String Cart(HttpSession session) {
@@ -81,7 +51,6 @@ public class CartController {
     public Map<String, Object> allCarts(HttpSession session, String msg) {
         Map<String, Object> result = new HashMap<String, Object>();
         LoginUser user = (LoginUser) session.getAttribute("user");
-        System.out.println("11111111111111" + user);
         // 判断是否登录
         if (user == null) {
             // 没有登录，创建HashMap
@@ -105,41 +74,24 @@ public class CartController {
                 // 判断操作类型,新增还是修改
         // 通过网页中传过来的bid查看书架中是否有书
         user = (LoginUser) session.getAttribute("user");
-        System.out.println("+++++++++++++++++++++++++++++" + user);
         if (user == null) {
             // 没有登录，创建HashMap
             msg = "请先登录";
             reslut.put("msg", msg);
             return reslut;
         }
-        logger.info("cart.bid = {}", cart.getBid());
-        logger.info("cart.bname = {}", cart.getBname());
-        logger.info("cart.count = {}", cart.getCount());
-        logger.info("cart.img = {}", cart.getImg());
-        logger.info("cart.price = {}", cart.getPrice());
-        // 将bookcart放入session中
-//        session.setAttribute("bookCart", bookCart);
-//        bookCart = (BookCart) session.getAttribute("bookCart");
-//        logger.info("book.bid = {}", book.getBid());
-        logger.info("cartService = {}", cartService);
-//        book = bookService.findAllById(book);
+        logger.info("cart = {}", cart.toString());
         int count = cartService.bookcountByBid(cart.getBid());
 
         // 如果图书量数量大于0
         if (count > 0) {
             // 怎么添加到书架中
             cart = cartService.oneCartBybid(user.getLuser(), cart.getBid());
-//            System.out.println(cart.getBid());
             if (cart == null) {
                 // 新增一个书数据
-                // 怎么将视图中的值传给，注意从session中取值的方法有两种
-                // 如果是session.put----------session.get
-                // 如果是ActionContext.getContext().getSession().put
-
                 cartService.addCart(user.getLuser(), bookCart.getBid(), bookCart.getCcount());
                 cartService.reBookCount(bookCart.getCcount(), bookCart.getBid());
-                // 添加订单信息
-                // 插入订单信息UUID 订单号必须唯一 随机产生单号
+                // 添加订单信息,插入订单信息UUID 订单号必须唯一 随机产生单号
                 Random random = new Random();
                 String oname = "" + System.currentTimeMillis() + user.getLuser() + random.nextInt(99);
                 borrowService.addOrder(user.getLuser(), oname, bookCart.getCcount(), bookCart.getBid());
@@ -154,8 +106,7 @@ public class CartController {
                 if (cart.getCount() > 0) {
                     cartService.upCartCount(user.getLuser(), bookCart.getBid());
                     cartService.reBookCount(bookCart.getCcount(), bookCart.getBid());
-                    // 添加订单信息
-                    // 插入订单信息UUID 订单号必须唯一 随机产生单号
+                    // 添加订单信息,插入订单信息UUID 订单号必须唯一 随机产生单号
                     Random random = new Random();
                     String oname = "" + System.currentTimeMillis() + user.getLuser() + random.nextInt(99);
                     borrowService.addOrder(user.getLuser(), oname, bookCart.getCcount(), bookCart.getBid());
@@ -180,25 +131,18 @@ public class CartController {
     @RequestMapping("reCartBook")
     @ResponseBody
     public String reCartBook(HttpSession session, Book book, BookCart bookCart) {
-//        session.setAttribute("bookCart", bookCart);
-//        bookCart = (BookCart) session.getAttribute("bookCart");
-//        System.out.println(bookCart + "333333333333333333333");
         LoginUser user = (LoginUser) session.getAttribute("user");
-        System.out.println(user + "4444444444444");
-        // System.out.println("减少图书");
         String msg = "请联系帅气的管理员";
         int bid = book.getBid();
         int ccount = bookCart.getCcount();
         int count = cartService.cartccountByBid(user.getLuser(), bid);
-        System.out.println(count + "555555555555555555533333333");
         // 如果书架中书数量大于0
         if (count > 1) {
             // 书架减少数量1
             cartService.recartcountById(bid);
             // 图书总数量增加1
             cartService.addbookcountById(bid);
-            // 添加订单信息
-            // 插入订单信息UUID 订单号必须唯一 随机产生单号
+            // 添加订单信息,插入订单信息UUID 订单号必须唯一 随机产生单号
             Random random = new Random();
             String oname = "" + System.currentTimeMillis() + user.getLuser() + random.nextInt(99);
             replayService.addOrderre(user.getLuser(), oname, ccount, bid);
@@ -206,21 +150,15 @@ public class CartController {
             return msg;
         }
         if (count == 1 || count < 1) {
-            // 书架为1，再减少就是为0，直接删除
-            System.out.println(bookCart.getBid());
-
             // 图书总数量增加1
             cartService.addbookcountById(bookCart.getBid());
-            System.out.println("机上-----------------");
             cartService.decartById(bookCart.getBid());
-            // 添加订单信息
-            // 插入订单信息UUID 订单号必须唯一 随机产生单号
+            // 添加订单信息,插入订单信息UUID 订单号必须唯一 随机产生单号
             Random random = new Random();
             String oname = "" + System.currentTimeMillis() + user.getLuser() + random.nextInt(99);
             replayService.addOrderre(user.getLuser(), oname, bookCart.getCcount(), bookCart.getBid());
             System.out.println("还完-----------------");
             msg = "已成功将此书还完";
-            System.out.println("wwwwwwwwwwwwwwww");
             return msg;
         }
         return "success";

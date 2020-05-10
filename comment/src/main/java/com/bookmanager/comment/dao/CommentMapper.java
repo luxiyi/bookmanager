@@ -14,8 +14,8 @@ import java.util.List;
 public interface CommentMapper {
     //展现一个商品的评论消息
     @Select("select * from comment where bid=#{param2}")
-    public List<Comment> allCommentsById(int bid);
+    List<Comment> allCommentsById(int bid);
     //插入评论
     @Insert("insert into comment (luser,bid,ccont) value (#{param1},#{param2},#{param3})")
-    public void insertCommentByid(String luser, int bid, String ccont);
+    void insertCommentByid(String luser, int bid, String ccont);
 }

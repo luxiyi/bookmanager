@@ -5,6 +5,8 @@ import com.bookmanager.pojo.Comment;
 import com.bookmanager.pojo.LoginUser;
 import com.bookmanager.service.BookService;
 import com.bookmanager.service.CommentService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +23,8 @@ import java.util.List;
  */
 @Controller
 public class CommentController {
+    private Logger LOG = LoggerFactory.getLogger(CommentController.class);
+
     @Autowired
     private CommentService commentService;
     @Autowired
@@ -39,13 +43,10 @@ public class CommentController {
     @ResponseBody
     public String insertComment(String info,LoginUser user,Book book,Comment comment,HttpSession session){
         user=(LoginUser)session.getAttribute("user");
-        System.out.println(user);
         if (user == null) {
             info="评价失败，请先登录";
-            System.out.println(info);
             return info;
         }else {
-            System.out.println(comment.getCcont()+"========================");
             if (comment.getCcont()=="") {
                 info="请输入评价";
                 return info;
@@ -53,7 +54,6 @@ public class CommentController {
                 commentService.insertCommentByid(user.getLuser(), book.getBid(), comment.getCcont());
                 bookService.updateComcount(book.getBid());
                 info="评价成功";
-                System.out.println(info);
                 return info;
             }
 
