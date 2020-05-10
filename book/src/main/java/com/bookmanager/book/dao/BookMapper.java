@@ -16,7 +16,7 @@ import java.util.List;
  */
 public interface BookMapper {
     //根据页码查找全部书
-    @Select("SELECT bid,bname,author,price,bcount,pubdate,press,img,intro FROM books limit #{param1},#{param2}")
+    @Select("SELECT bid,bname,author,price,bcount,pubdate,press,img,intro,flag,comcount FROM books limit #{param1},#{param2}")
     List<Book> findALLByIndex(int index, int count);
     //查询总条数
     @Select("SELECT COUNT(*) total FROM books")

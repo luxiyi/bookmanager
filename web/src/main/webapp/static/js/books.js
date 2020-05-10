@@ -28,6 +28,8 @@ function showBooks(ppage) {
 								+ po.author
 								+ "&nbsp;&nbsp;&nbsp;出版社："
 								+ po.press
+							+ "&nbsp;&nbsp;&nbsp;评论数量："
+							+ po.comcount
 								+ "</h4>"
 								+ "<h4>出版日期："
 								+ po.pubdate

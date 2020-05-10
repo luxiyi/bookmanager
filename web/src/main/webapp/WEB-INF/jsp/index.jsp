@@ -458,9 +458,17 @@ body {
 		</div>
 		<!-- 底部 -->
 		<div class="container" id="downbox" style="width: 100%;height: 200px;float: left;background: url(../../static/img/24-2.jpg);background-size: 150%;
-			text-align: center;line-height: 200px;font-size: 30px;">
-			<div class="row" id="downrow">OnLu集团© 2018 版权所有</div>
-		</div>
+			text-align: center;line-height: 200px;font-size: 15px;">
+			<div class="row" id="downrow">
+				©2020-OnLu <a href="http://icp.chinaz.com/info?q=luxiyi.top" target="_blank"
+							  style="display:inline-block;text-decoration:none;height:20px;line-height:20px;color: black;">
+				蜀ICP备20008951号</a>
+
+				<a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=51012402000457"
+				   style="display:inline-block;text-decoration:none;height:20px;line-height:20px;color: black;">
+					<img src="../../static/img/beian.png" style="float:left;"/>
+					川公网安备51012402000457号</a>
+			</div>
 	</div>
 
 </body>
